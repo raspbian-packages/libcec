@@ -1,0 +1,72 @@
+Description: open libcec.so.1 instead of libcec.so
+Origin: upstream, https://github.com/Pulse-Eight/libcec/commit/a71897f4
+Last-Modified: 2012-12-21
+Bug-Debian: http://bugs.debian.org/695702
+Bug: https://github.com/Pulse-Eight/libcec/issues/30
+
+--- a/include/cecloader.h
++++ b/include/cecloader.h
+@@ -159,15 +159,11 @@
+ #if defined(__APPLE__)
+     g_libCEC = dlopen(strLib ? strLib : "libcec.dylib", RTLD_LAZY);
+ #else
+-    g_libCEC = dlopen(strLib ? strLib : "libcec.so", RTLD_LAZY);
++    g_libCEC = dlopen(strLib ? strLib : "libcec.so." CEC_LIB_VERSION_MAJOR_STR, RTLD_LAZY);
+ #endif
+     if (!g_libCEC)
+     {
+-#if defined(__APPLE__)
+-      cout << "cannot find " << (strLib ? strLib : "libcec.dylib") << dlerror() << endl;
+-#else
+-      cout << "cannot find " << (strLib ? strLib : "libcec.so") << dlerror() << endl;
+-#endif
++      cout << dlerror() << endl;
+       return NULL;
+     }
+   }
+@@ -196,15 +192,11 @@
+ #if defined(__APPLE__)
+     g_libCEC = dlopen(strLib ? strLib : "libcec.dylib", RTLD_LAZY);
+ #else
+-    g_libCEC = dlopen(strLib ? strLib : "libcec.so", RTLD_LAZY);
++    g_libCEC = dlopen(strLib ? strLib : "libcec.so." CEC_LIB_VERSION_MAJOR_STR, RTLD_LAZY);
+ #endif
+     if (!g_libCEC)
+     {
+-#if defined(__APPLE__)
+-      cout << "cannot find " << (strLib ? strLib : "libcec.dylib") << dlerror() << endl;
+-#else
+-      cout << "cannot find " << (strLib ? strLib : "libcec.so") << dlerror() << endl;
+-#endif
++      cout << dlerror() << endl;
+       return NULL;
+     }
+   }
+@@ -246,15 +238,11 @@
+ #if defined(__APPLE__)
+     g_libCEC = dlopen(strLib ? strLib : "libcec.dylib", RTLD_LAZY);
+ #else
+-    g_libCEC = dlopen(strLib ? strLib : "libcec.so", RTLD_LAZY);
++    g_libCEC = dlopen(strLib ? strLib : "libcec.so." CEC_LIB_VERSION_MAJOR_STR, RTLD_LAZY);
+ #endif
+     if (!g_libCEC)
+     {
+-#if defined(__APPLE__)
+-      cout << "cannot find " << (strLib ? strLib : "libcec.dylib") << dlerror() << endl;
+-#else
+-      cout << "cannot find " << (strLib ? strLib : "libcec.so") << dlerror() << endl;
+-#endif
++      cout << dlerror() << endl;
+       return NULL;
+     }
+   }
+--- a/include/cectypes.h
++++ b/include/cectypes.h
+@@ -112,6 +112,7 @@
+ 
+ #define CEC_MIN_LIB_VERSION          1
+ #define CEC_LIB_VERSION_MAJOR        1
++#define CEC_LIB_VERSION_MAJOR_STR    "1"
+ #define CEC_LIB_VERSION_MINOR        6
+ 
+ typedef enum cec_abort_reason

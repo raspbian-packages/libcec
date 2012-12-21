@@ -1,0 +1,50 @@
+libcec (1.6.2-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * debian/patches/695702.patch: Backport patch from upstream to load
+    libcec.so.1 instead of libcec.so. Thanks to Andrey Rahmatullin for
+    finding the patch in the upstream repository. (Closes: #695702)
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Fri, 21 Dec 2012 20:47:14 +0100
+
+libcec (1.6.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Andres Mejia <amejia@debian.org>  Wed, 02 May 2012 22:35:02 -0400
+
+libcec (1.6.1-2) unstable; urgency=low
+
+  * Build depends on pkg-config. (Closes: #669919)
+  * libudev-dev only optionally needed for Linux.
+
+ -- Andres Mejia <amejia@debian.org>  Sat, 21 Apr 2012 19:03:19 -0400
+
+libcec (1.6.1-1) unstable; urgency=low
+
+  [ Mario Limonciello ]
+  * New upstream version (LP: #982272)
+
+  [ Andres Mejia ]
+  * New release fixes build failure with GCC-4.7. (Closes: #667241)
+  * Bump to Standards-Version 3.9.3.
+
+ -- Andres Mejia <amejia@debian.org>  Sat, 21 Apr 2012 00:02:08 -0400
+
+libcec (1.3.2-3) unstable; urgency=low
+
+  * Make dpkg-source options default for packaging.
+
+ -- Andres Mejia <amejia@debian.org>  Tue, 10 Jan 2012 18:12:57 -0500
+
+libcec (1.3.2-2) unstable; urgency=low
+
+  * Add options to pass to dpkg-source.
+
+ -- Andres Mejia <amejia@debian.org>  Sun, 08 Jan 2012 22:59:34 -0500
+
+libcec (1.3.2-1) unstable; urgency=low
+
+  * Initial release. (Closes: #655143)
+
+ -- Andres Mejia <amejia@debian.org>  Sun, 08 Jan 2012 15:36:49 -0500
