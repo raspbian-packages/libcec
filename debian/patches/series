@@ -1,0 +1,3 @@
+0001-Fall-back-to-look-for-libudev.pc-if-udev.pc-is-not-u.patch
+03_reproducible_build.patch
+04_fix_pkgconfig_libdir.patch
