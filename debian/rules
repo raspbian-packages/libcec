@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+%:
+	dh  $@ --with python2
+
+override_dh_auto_configure:
+	sed -i 's/(arch=!armel)/(optional=raspbian)/' debian/libcec3.symbols
+	ln -s /usr/include/cec-platform include/platform && \
+	dh_auto_configure -- -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)
+
+override_dh_auto_install:
+	dh_auto_install
+	mv debian/tmp/usr/lib/pkgconfig debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/
+	rm debian/tmp/usr/bin/cec-client
+	mv debian/tmp/usr/bin/cec-client-* debian/tmp/usr/bin/cec-client
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f include/platform
+	rm -f include/version.h
+	rm -f src/cec-client/env.h
+	rm -f src/cecc-client/env.h
+	rm -f src/libcec/env.h
+	rm -f src/libcec/libcec.pc
+	sed -i 's/(optional=raspbian)/(arch=!armel)/' debian/libcec3.symbols
