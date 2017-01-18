@@ -160,7 +160,7 @@ else()
   configure_pc_file(cec ${CMAKE_CURRENT_SOURCE_DIR}/libcec.pc.in
                         ${CMAKE_CURRENT_SOURCE_DIR}/libcec.pc
                         ${CMAKE_INSTALL_PREFIX}
-                        ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}
+                        ${CMAKE_INSTALL_LIBDIR}
                         ${CMAKE_INSTALL_PREFIX}/include)
 
   install(FILES         ${CMAKE_CURRENT_SOURCE_DIR}/libcec.pc
