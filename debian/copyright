@@ -20,13 +20,6 @@ Files: debian/*
 Copyright: 2011, Andres Mejia <amejia@debian.org>
 License: GPL-2+
 
-Files: src/LibCecTray/ui/About.cs
-  src/LibCecTray/ui/AsyncForm.cs
-  src/LibCecTray/ui/CECTray.cs
-  src/LibCecTray/ui/DeviceInformation.cs
-Copyright: 2011-2015, Pulse-Eight Limited.
-License: GPL-2+
-
 Files: src/libcec/adapter/Exynos/*
 Copyright: 2014, Valentin Manea
   2011-2015, Pulse-Eight Limited.

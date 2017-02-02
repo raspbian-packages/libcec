@@ -124,8 +124,8 @@ namespace CEC
     virtual bool                  RequestCecVersion(const cec_logical_address initiator, bool bWaitForResponse = true);
     virtual bool                  TransmitCECVersion(const cec_logical_address destination, bool bIsReply);
 
-    virtual cec_menu_language &   GetMenuLanguage(const cec_logical_address initiator, bool bUpdate = false);
-    virtual void                  SetMenuLanguage(const char *strLanguage);
+    virtual std::string           GetMenuLanguage(const cec_logical_address initiator, bool bUpdate = false);
+    virtual void                  SetMenuLanguage(const std::string& strLanguage);
     virtual void                  SetMenuLanguage(const cec_menu_language &menuLanguage);
     virtual bool                  RequestMenuLanguage(const cec_logical_address initiator, bool bWaitForResponse = true);
     virtual bool                  TransmitSetMenuLanguage(const cec_logical_address destination, bool bIsReply);
@@ -188,6 +188,11 @@ namespace CEC
     virtual bool                  PowerOn(const cec_logical_address initiator);
     virtual bool                  Standby(const cec_logical_address initiator);
 
+    virtual bool                  SystemAudioModeRequest(void);
+    virtual bool                  TransmitVolumeUp(const cec_logical_address source, bool bSendRelease = true);
+    virtual bool                  TransmitVolumeDown(const cec_logical_address source, bool bSendRelease = true);
+    virtual bool                  TransmitMuteAudio(const cec_logical_address source);
+
     virtual bool                  TryLogicalAddress(cec_version libCECSpecVersion = CEC_VERSION_1_4);
 
     CECClientPtr                  GetClient(void);
@@ -218,7 +223,7 @@ namespace CEC
     uint16_t              m_iStreamPath;
     cec_logical_address   m_iLogicalAddress;
     cec_power_status      m_powerStatus;
-    cec_menu_language     m_menuLanguage;
+    std::string           m_menuLanguage;
     CCECProcessor      *  m_processor;
     CCECCommandHandler *  m_handler;
     cec_vendor_id         m_vendor;

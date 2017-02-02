@@ -55,6 +55,7 @@ using namespace P8PLATFORM;
 #define SL_COMMAND_POWER_ON             0x03
 #define SL_COMMAND_CONNECT_REQUEST      0x04
 #define SL_COMMAND_SET_DEVICE_MODE      0x05
+#define SL_COMMAND_REQUEST_RECONNECT    0x0b
 #define SL_COMMAND_REQUEST_POWER_STATUS 0xa0
 
 #define LIB_CEC     m_busDevice->GetProcessor()->GetLib()
@@ -75,8 +76,7 @@ CSLCommandHandler::CSLCommandHandler(CCECBusDevice *busDevice,
 
   /* LG devices always return "korean" as language */
   cec_menu_language lang;
-  lang.device = m_busDevice->GetLogicalAddress();
-  snprintf(lang.language, 4, "eng");
+  snprintf(lang, 4, "eng");
   m_busDevice->SetMenuLanguage(lang);
 }
 
@@ -124,6 +124,12 @@ int CSLCommandHandler::HandleVendorCommand(const cec_command &command)
       command.parameters[0] == SL_COMMAND_CONNECT_REQUEST)
   {
     HandleVendorCommandSLConnect(command);
+    return COMMAND_HANDLED;
+  }
+  else if (command.parameters.size == 1 &&
+      command.parameters[0] == SL_COMMAND_REQUEST_RECONNECT)
+  {
+    HandleVendorCommandPowerOn(command);
     return COMMAND_HANDLED;
   }
   else if (command.parameters.size == 1 &&

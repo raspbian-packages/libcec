@@ -4,7 +4,7 @@ Author: Balint Reczey <balint@balintreczey.hu>
 Forwarded: not-needed
 --- a/src/libcec/CMakeLists.txt
 +++ b/src/libcec/CMakeLists.txt
-@@ -157,7 +157,7 @@
+@@ -160,7 +160,7 @@
    configure_pc_file(cec ${CMAKE_CURRENT_SOURCE_DIR}/libcec.pc.in
                          ${CMAKE_CURRENT_SOURCE_DIR}/libcec.pc
                          ${CMAKE_INSTALL_PREFIX}

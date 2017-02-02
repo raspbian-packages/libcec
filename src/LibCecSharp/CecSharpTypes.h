@@ -828,7 +828,7 @@ namespace CecSharp
     /// </summary>
     VolumeStatusMask    = 0x7F,
     /// <summary>
-    /// Minumum volume
+    /// Minimum volume
     /// </summary>
     VolumeMin           = 0x00,
     /// <summary>
@@ -1156,10 +1156,18 @@ namespace CecSharp
     /// </summary>
     /// <param name="path"> The path descriptor for this CEC adapter</param>
     /// <param name="comPort">The COM port of this CEC adapter</param>
-    CecAdapter(System::String ^ path, System::String ^ comPort)
+    CecAdapter(System::String ^ path, System::String ^ comPort,
+      uint16_t vendorID, uint16_t productID, uint16_t firmwareVersion,
+      uint32_t firmwareBuildDate, uint16_t physicalAddress)
     {
       Path = path;
       ComPort = comPort;
+      VendorID = vendorID;
+      ProductID = productID;
+      FirmwareVersion = firmwareVersion;
+      System::DateTime ^ dt = gcnew System::DateTime(1970, 1, 1, 0, 0, 0, 0, System::DateTimeKind::Utc);
+      FirmwareBuildDate = dt->AddSeconds(firmwareBuildDate);
+      PhysicalAddress = physicalAddress;
     }
 
     /// <summary>
@@ -1171,6 +1179,31 @@ namespace CecSharp
     /// The COM port of this CEC adapter
     /// </summary>
     property System::String ^ ComPort;
+
+    /// <summary>
+    /// USB vendor ID
+    /// </summary>
+    property uint16_t VendorID;
+
+    /// <summary>
+    /// USB product ID
+    /// </summary>
+    property uint16_t ProductID;
+
+    /// <summary>
+    /// Adapter firmware version
+    /// </summary>
+    property uint16_t FirmwareVersion;
+
+    /// <summary>
+    /// Adapter firmware build date
+    /// </summary>
+    property System::DateTime ^ FirmwareBuildDate;
+
+    /// <summary>
+    /// Adapter physical address
+    /// </summary>
+    property uint16_t PhysicalAddress;
   };
 
   /// <summary>
@@ -1506,12 +1539,11 @@ namespace CecSharp
       PhysicalAddress     = CEC_DEFAULT_PHYSICAL_ADDRESS;
       BaseDevice          = (CecLogicalAddress)CEC_DEFAULT_BASE_DEVICE;
       HDMIPort            = CEC_DEFAULT_HDMI_PORT;
-	  ClientVersion       = _LIBCEC_VERSION_CURRENT;
+      ClientVersion       = _LIBCEC_VERSION_CURRENT;
       ServerVersion       = 0;
       TvVendor            = CecVendorId::Unknown;
 
       GetSettingsFromROM  = false;
-      UseTVMenuLanguage   = CEC_DEFAULT_SETTING_USE_TV_MENU_LANGUAGE == 1;
       ActivateSource      = CEC_DEFAULT_SETTING_ACTIVATE_SOURCE == 1;
 
       WakeDevices         = gcnew CecLogicalAddresses();
@@ -1522,14 +1554,10 @@ namespace CecSharp
       if (CEC_DEFAULT_SETTING_POWER_OFF_SHUTDOWN == 1)
         PowerOffDevices->Set(CecLogicalAddress::Broadcast);
 
-      PowerOffScreensaver = CEC_DEFAULT_SETTING_POWER_OFF_SCREENSAVER == 1;
       PowerOffOnStandby   = CEC_DEFAULT_SETTING_POWER_OFF_ON_STANDBY == 1;
 
-      SendInactiveSource  = CEC_DEFAULT_SETTING_SEND_INACTIVE_SOURCE == 1;
       LogicalAddresses    = gcnew CecLogicalAddresses();
       FirmwareVersion     = 1;
-      PowerOffDevicesOnStandby = CEC_DEFAULT_SETTING_POWER_OFF_DEVICES_STANDBY == 1;
-      ShutdownOnStandby   = CEC_DEFAULT_SETTING_SHUTDOWN_ON_STANDBY == 1;
       DeviceLanguage      = "";
       FirmwareBuildDate   = gcnew System::DateTime(1970,1,1,0,0,0,0);
       CECVersion          = (CecVersion)CEC_DEFAULT_SETTING_CEC_VERSION;
@@ -1568,7 +1596,6 @@ namespace CecSharp
 
       // player specific settings
       GetSettingsFromROM = config.bGetSettingsFromROM == 1;
-      UseTVMenuLanguage = config.bUseTVMenuLanguage == 1;
       ActivateSource = config.bActivateSource == 1;
 
       WakeDevices->Clear();
@@ -1581,9 +1608,7 @@ namespace CecSharp
         if (config.powerOffDevices[iPtr])
           PowerOffDevices->Set((CecLogicalAddress)iPtr);
 
-      PowerOffScreensaver = config.bPowerOffScreensaver == 1;
       PowerOffOnStandby = config.bPowerOffOnStandby == 1;
-      SendInactiveSource = config.bSendInactiveSource == 1;
 
 	  LogicalAddresses->Clear();
       for (uint8_t iPtr = 0; iPtr <= 16; iPtr++)
@@ -1591,8 +1616,6 @@ namespace CecSharp
           LogicalAddresses->Set((CecLogicalAddress)iPtr);
 
       FirmwareVersion          = config.iFirmwareVersion;
-      PowerOffDevicesOnStandby = config.bPowerOffDevicesOnStandby == 1;
-      ShutdownOnStandby        = config.bShutdownOnStandby == 1;
 
       DeviceLanguage = gcnew System::String(config.strDeviceLanguage);
       FirmwareBuildDate = gcnew System::DateTime(1970,1,1,0,0,0,0);
@@ -1601,7 +1624,6 @@ namespace CecSharp
       MonitorOnlyClient = config.bMonitorOnly == 1;
       CECVersion = (CecVersion)config.cecVersion;
       AdapterType = (CecAdapterType)config.adapterType;
-      PowerOnScreensaver = config.bPowerOnScreensaver == 1;
     }
 
     /// <summary>
@@ -1642,7 +1664,7 @@ namespace CecSharp
     /// <summary>
     /// The version of libCEC
     /// </summary>
-	property uint32_t             ServerVersion;
+    property uint32_t             ServerVersion;
 
     /// <summary>
     /// Override the vendor ID of the TV. Leave this untouched to autodetect
@@ -1653,12 +1675,6 @@ namespace CecSharp
     /// True to read the settings from the EEPROM, which possibly override the settings passed here
     /// </summary>
     property bool                 GetSettingsFromROM;
-
-    /// <summary>
-    /// Use the language setting of the TV in the client application. Must be implemented by the client application.
-    /// 3 character ISO 639-2 country code. see http://http://www.loc.gov/standards/iso639-2/
-    /// </summary>
-    property bool                 UseTVMenuLanguage;
 
     /// <summary>
     /// Make libCEC the active source when starting the client application
@@ -1676,19 +1692,9 @@ namespace CecSharp
     property CecLogicalAddresses ^PowerOffDevices;
 
     /// <summary>
-    /// Send standby commands when the client application activates the screensaver. Must be implemented by the client application.
-    /// </summary>
-    property bool                 PowerOffScreensaver;
-
-    /// <summary>
     /// Power off the PC when the TV powers off. Must be implemented by the client application.
     /// </summary>
     property bool                 PowerOffOnStandby;
-
-    /// <summary>
-    /// Send an inactive source message when exiting the client application.
-    /// </summary>
-    property bool                 SendInactiveSource;
 
     /// <summary>
     /// The list of logical addresses that libCEC is using
@@ -1699,17 +1705,7 @@ namespace CecSharp
     /// The firmware version of the adapter to which libCEC is connected
     /// </summary>
     property uint16_t             FirmwareVersion;
-
-    /// <summary>
-    /// Send standby commands when the client application activates standby mode (S3). Must be implemented by the client application.
-    /// </summary>
-    property bool                 PowerOffDevicesOnStandby;
-
-    /// <summary>
-    /// Shutdown this PC when the TV is switched off. only used when PowerOffOnStandby = false
-    /// </summary>
-    property bool                 ShutdownOnStandby;
-
+	
     /// <summary>
     /// True to start a monitor-only client, false to start a standard client.
     /// </summary>
@@ -1741,22 +1737,18 @@ namespace CecSharp
     /// </summary>
     property CecAdapterType       AdapterType;
 
-	/// <summary>
-    /// True to power on when quitting the screensaver.
-    /// </summary>
-	property bool                 PowerOnScreensaver;
   };
 
   // the callback methods are called by unmanaged code, so we need some delegates for this
 #pragma unmanaged
   // unmanaged callback methods
-  typedef int (__stdcall *LOGCB)    (const CEC::cec_log_message &message);
-  typedef int (__stdcall *KEYCB)    (const CEC::cec_keypress &key);
-  typedef int (__stdcall *COMMANDCB)(const CEC::cec_command &command);
-  typedef int (__stdcall *CONFIGCB) (const CEC::libcec_configuration &config);
-  typedef int (__stdcall *ALERTCB)  (const CEC::libcec_alert, const CEC::libcec_parameter &data);
-  typedef int (__stdcall *MENUCB)   (const CEC::cec_menu_state newVal);
-  typedef void (__stdcall *ACTICB)  (const CEC::cec_logical_address logicalAddress, const uint8_t bActivated);
+  typedef void (__stdcall *LOGCB)    (const CEC::cec_log_message* message);
+  typedef void (__stdcall *KEYCB)    (const CEC::cec_keypress* key);
+  typedef void (__stdcall *COMMANDCB)(const CEC::cec_command* command);
+  typedef void (__stdcall *CONFIGCB) (const CEC::libcec_configuration* config);
+  typedef void (__stdcall *ALERTCB)  (const CEC::libcec_alert, const CEC::libcec_parameter &data);
+  typedef int  (__stdcall *MENUCB)   (const CEC::cec_menu_state newVal);
+  typedef void (__stdcall *ACTICB)   (const CEC::cec_logical_address logicalAddress, const uint8_t bActivated);
 
   /// <summary>
   /// libCEC callback methods. Unmanaged code.
@@ -1802,17 +1794,15 @@ namespace CecSharp
   /// </summary>
   /// <param name="cbParam">Pointer to the callback struct</param>
   /// <param name="message">The log message</param>
-  /// <return>1 when handled, 0 otherwise</return>
-  int CecLogMessageCB(void *cbParam, const CEC::cec_log_message message)
+  void CecLogMessageCB(void *cbParam, const CEC::cec_log_message* message)
   {
     if (cbParam)
     {
       size_t iPtr = (size_t)cbParam;
       P8PLATFORM::CLockObject lock(g_callbackMutex);
       if (iPtr >= 0 && iPtr < g_unmanagedCallbacks.size())
-        return g_unmanagedCallbacks[iPtr].logCB(message);
+        g_unmanagedCallbacks[iPtr].logCB(message);
     }
-    return 0;
   }
 
   /// <summary>
@@ -1820,17 +1810,15 @@ namespace CecSharp
   /// </summary>
   /// <param name="cbParam">Pointer to the callback struct</param>
   /// <param name="key">The key press command that libCEC received</param>
-  /// <return>1 when handled, 0 otherwise</return>
-  int CecKeyPressCB(void *cbParam, const CEC::cec_keypress key)
+  void CecKeyPressCB(void *cbParam, const CEC::cec_keypress* key)
   {
     if (cbParam)
     {
       size_t iPtr = (size_t)cbParam;
       P8PLATFORM::CLockObject lock(g_callbackMutex);
       if (iPtr >= 0 && iPtr < g_unmanagedCallbacks.size())
-        return g_unmanagedCallbacks[iPtr].keyCB(key);
+        g_unmanagedCallbacks[iPtr].keyCB(key);
     }
-    return 0;
   }
 
   /// <summary>
@@ -1838,17 +1826,15 @@ namespace CecSharp
   /// </summary>
   /// <param name="cbParam">Pointer to the callback struct</param>
   /// <param name="command">The raw CEC data</param>
-  /// <return>1 when handled, 0 otherwise</return>
-  int CecCommandCB(void *cbParam, const CEC::cec_command command)
+  void CecCommandCB(void *cbParam, const CEC::cec_command* command)
   {
     if (cbParam)
     {
       size_t iPtr = (size_t)cbParam;
       P8PLATFORM::CLockObject lock(g_callbackMutex);
       if (iPtr >= 0 && iPtr < g_unmanagedCallbacks.size())
-        return g_unmanagedCallbacks[iPtr].commandCB(command);
+        g_unmanagedCallbacks[iPtr].commandCB(command);
     }
-    return 0;
   }
 
   /// <summary>
@@ -1856,17 +1842,15 @@ namespace CecSharp
   /// </summary>
   /// <param name="cbParam">Pointer to the callback struct</param>
   /// <param name="config">The new configuration</param>
-  /// <return>1 when handled, 0 otherwise</return>
-  int CecConfigCB(void *cbParam, const CEC::libcec_configuration config)
+  void CecConfigCB(void *cbParam, const CEC::libcec_configuration* config)
   {
     if (cbParam)
     {
       size_t iPtr = (size_t)cbParam;
       P8PLATFORM::CLockObject lock(g_callbackMutex);
       if (iPtr >= 0 && iPtr < g_unmanagedCallbacks.size())
-        return g_unmanagedCallbacks[iPtr].configCB(config);
+        g_unmanagedCallbacks[iPtr].configCB(config);
     }
-    return 0;
   }
 
   /// <summary>
@@ -1874,17 +1858,15 @@ namespace CecSharp
   /// </summary>
   /// <param name="cbParam">Pointer to the callback struct</param>
   /// <param name="data">The alert message</param>
-  /// <return>1 when handled, 0 otherwise</return>
-  int CecAlertCB(void *cbParam, const CEC::libcec_alert alert, const CEC::libcec_parameter data)
+  void CecAlertCB(void *cbParam, const CEC::libcec_alert alert, const CEC::libcec_parameter data)
   {
     if (cbParam)
     {
       size_t iPtr = (size_t)cbParam;
       P8PLATFORM::CLockObject lock(g_callbackMutex);
       if (iPtr >= 0 && iPtr < g_unmanagedCallbacks.size())
-        return g_unmanagedCallbacks[iPtr].alertCB(alert, data);
+        g_unmanagedCallbacks[iPtr].alertCB(alert, data);
     }
-    return 0;
   }
 
   /// <summary>
@@ -1957,13 +1939,13 @@ namespace CecSharp
   /// </summary>
   void AssignCallbacks()
   {
-    g_cecCallbacks.CBCecLogMessage           = CecLogMessageCB;
-    g_cecCallbacks.CBCecKeyPress             = CecKeyPressCB;
-    g_cecCallbacks.CBCecCommand              = CecCommandCB;
-    g_cecCallbacks.CBCecConfigurationChanged = CecConfigCB;
-    g_cecCallbacks.CBCecAlert                = CecAlertCB;
-    g_cecCallbacks.CBCecMenuStateChanged     = CecMenuCB;
-    g_cecCallbacks.CBCecSourceActivated      = CecSourceActivatedCB;
+    g_cecCallbacks.logMessage           = CecLogMessageCB;
+    g_cecCallbacks.keyPress             = CecKeyPressCB;
+    g_cecCallbacks.commandReceived      = CecCommandCB;
+    g_cecCallbacks.configurationChanged = CecConfigCB;
+    g_cecCallbacks.alert                = CecAlertCB;
+    g_cecCallbacks.menuStateChanged     = CecMenuCB;
+    g_cecCallbacks.sourceActivated      = CecSourceActivatedCB;
   }
 
   /// <summary>

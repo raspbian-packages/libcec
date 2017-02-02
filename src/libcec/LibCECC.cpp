@@ -34,7 +34,9 @@
 #include "env.h"
 #include "cec.h"
 #include "cecc.h"
+#include "LibCEC.h"
 #include "CECTypeUtils.h"
+#include <algorithm>
 
 using namespace CEC;
 
@@ -87,7 +89,8 @@ int libcec_enable_callbacks(libcec_connection_t connection, void* cbParam, ICECC
 
 int8_t libcec_find_adapters(libcec_connection_t connection, cec_adapter* deviceList, uint8_t iBufSize, const char* strDevicePath)
 {
-  ICECAdapter* adapter = static_cast<ICECAdapter*>(connection);
+  //TODO change to use DetectAdapters()
+  CLibCEC* adapter = static_cast<CLibCEC*>(connection);
   return adapter ?
       adapter->FindAdapters(deviceList, iBufSize, strDevicePath) :
       -1;
@@ -211,12 +214,16 @@ cec_version libcec_get_device_cec_version(libcec_connection_t connection, cec_lo
       CEC_VERSION_UNKNOWN;
 }
 
-int libcec_get_device_menu_language(libcec_connection_t connection, cec_logical_address iLogicalAddress, cec_menu_language* language)
+int libcec_get_device_menu_language(libcec_connection_t connection, cec_logical_address iLogicalAddress, cec_menu_language language)
 {
   ICECAdapter* adapter = static_cast<ICECAdapter*>(connection);
-  return adapter ?
-      (adapter->GetDeviceMenuLanguage(iLogicalAddress, language) ? 1 : 0) :
-      -1;
+  if (!!adapter)
+  {
+    std::string menuLang(adapter->GetDeviceMenuLanguage(iLogicalAddress));
+    strncpy(language, menuLang.c_str(), 4);
+    return 0;
+  }
+  return -1;
 }
 
 uint32_t libcec_get_device_vendor_id(libcec_connection_t connection, cec_logical_address iLogicalAddress)
@@ -317,11 +324,11 @@ int libcec_volume_down(libcec_connection_t connection, int bSendRelease)
       -1;
 }
 
-int libcec_mute_audio(libcec_connection_t connection, int bSendRelease)
+int libcec_mute_audio(libcec_connection_t connection, int UNUSED(bSendRelease))
 {
   ICECAdapter* adapter = static_cast<ICECAdapter*>(connection);
   return adapter ?
-      adapter->MuteAudio(bSendRelease == 1) :
+      adapter->AudioToggleMute() :
       -1;
 }
 
@@ -341,17 +348,16 @@ int libcec_send_key_release(libcec_connection_t connection, cec_logical_address 
       -1;
 }
 
-cec_osd_name libcec_get_device_osd_name(libcec_connection_t connection, cec_logical_address iAddress)
+int libcec_get_device_osd_name(libcec_connection_t connection, cec_logical_address iAddress, cec_osd_name name)
 {
-  cec_osd_name retVal;
-  retVal.device = iAddress;
-  retVal.name[0] = 0;
-
   ICECAdapter* adapter = static_cast<ICECAdapter*>(connection);
-  if (adapter)
-    retVal = adapter->GetDeviceOSDName(iAddress);
-
-  return retVal;
+  if (!!adapter)
+  {
+    std::string osdName(adapter->GetDeviceOSDName(iAddress));
+    strncpy(name, osdName.c_str(), std::min(sizeof(cec_osd_name), osdName.size()));
+    return 0;
+  }
+  return -1;
 }
 
 int libcec_set_stream_path_logical(libcec_connection_t connection, cec_logical_address iAddress)

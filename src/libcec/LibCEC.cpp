@@ -231,9 +231,9 @@ cec_version CLibCEC::GetDeviceCecVersion(cec_logical_address iAddress)
   return m_client ? m_client->GetDeviceCecVersion(iAddress) : CEC_VERSION_UNKNOWN;
 }
 
-bool CLibCEC::GetDeviceMenuLanguage(cec_logical_address iAddress, cec_menu_language *language)
+std::string CLibCEC::GetDeviceMenuLanguage(cec_logical_address iAddress)
 {
-  return m_client ? m_client->GetDeviceMenuLanguage(iAddress, *language) : false;
+  return !!m_client ? m_client->GetDeviceMenuLanguage(iAddress) : "???";
 }
 
 uint32_t CLibCEC::GetDeviceVendorId(cec_logical_address iAddress)
@@ -285,12 +285,6 @@ uint8_t CLibCEC::VolumeDown(bool bSendRelease /* = true */)
   return m_client ? m_client->SendVolumeDown(bSendRelease) : (uint8_t)CEC_AUDIO_VOLUME_STATUS_UNKNOWN;
 }
 
-uint8_t CLibCEC::MuteAudio(bool UNUSED(bSendRelease) /* = true */)
-{
-  AddLog(CEC_LOG_WARNING, "deprecated function called: %s", __FUNCTION__);
-  return m_client ? m_client->SendMuteAudio() : (uint8_t)CEC_AUDIO_VOLUME_STATUS_UNKNOWN;
-}
-
 bool CLibCEC::SendKeypress(cec_logical_address iDestination, cec_user_control_code key, bool bWait /* = true */)
 {
   return m_client ? m_client->SendKeypress(iDestination, key, bWait) : false;
@@ -301,15 +295,11 @@ bool CLibCEC::SendKeyRelease(cec_logical_address iDestination, bool bWait /* = t
   return m_client ? m_client->SendKeyRelease(iDestination, bWait) : false;
 }
 
-cec_osd_name CLibCEC::GetDeviceOSDName(cec_logical_address iAddress)
+std::string CLibCEC::GetDeviceOSDName(cec_logical_address iAddress)
 {
-  cec_osd_name retVal;
-  retVal.device = CECDEVICE_UNKNOWN;
-  memset(retVal.name, 0, 14);
-
-  if (m_client)
-    retVal = m_client->GetDeviceOSDName(iAddress);
-  return retVal;
+  return !!m_client ?
+      m_client->GetDeviceOSDName(iAddress) :
+      "";
 }
 
 cec_logical_address CLibCEC::GetActiveSource(void)
@@ -376,17 +366,13 @@ uint16_t CLibCEC::CheckKeypressTimeout(void)
 
 void CLibCEC::AddLog(const cec_log_level level, const char *strFormat, ...)
 {
-  std::string strLog;
-
   // format the message
   va_list argList;
-  va_start(argList, strFormat);
-  strLog = StringUtils::FormatV(strFormat, argList);
-
-  cec_log_message message;
+  cec_log_message_cpp message;
   message.level = level;
   message.time = GetTimeMs() - m_iStartTime;
-  snprintf(message.message, sizeof(message.message), "%s", strLog.c_str());
+  va_start(argList, strFormat);
+  message.message = StringUtils::FormatV(strFormat, argList);
   va_end(argList);
 
   // send the message to all clients
@@ -398,6 +384,7 @@ void CLibCEC::AddLog(const cec_log_level level, const char *strFormat, ...)
 void CLibCEC::AddCommand(const cec_command &command)
 {
   // send the command to all clients
+  CLockObject lock(m_mutex);
   for (std::vector<CECClientPtr>::iterator it = m_clients.begin(); it != m_clients.end(); it++)
     (*it)->QueueAddCommand(command);
 }
@@ -405,6 +392,7 @@ void CLibCEC::AddCommand(const cec_command &command)
 void CLibCEC::Alert(const libcec_alert type, const libcec_parameter &param)
 {
   // send the alert to all clients
+  CLockObject lock(m_mutex);
   for (std::vector<CECClientPtr>::iterator it = m_clients.begin(); it != m_clients.end(); it++)
     (*it)->Alert(type, param);
 }
@@ -413,6 +401,11 @@ CECClientPtr CLibCEC::RegisterClient(libcec_configuration &configuration)
 {
   if (!m_cec)
     return CECClientPtr();
+  if (configuration.clientVersion < LIBCEC_VERSION_TO_UINT(4, 0, 0))
+  {
+    AddLog(CEC_LOG_ERROR, "failed to register a new CEC client: client version %s is no longer supported", CCECTypeUtils::VersionToString(configuration.clientVersion).c_str());
+    return CECClientPtr();
+  }
 
   // create a new client instance
   CECClientPtr newClient = CECClientPtr(new CCECClient(m_cec, configuration));
@@ -426,7 +419,10 @@ CECClientPtr CLibCEC::RegisterClient(libcec_configuration &configuration)
 
   // register the new client
   if (m_cec->CECInitialised())
-    m_cec->RegisterClient(newClient);
+  {
+    if (!m_cec->RegisterClient(newClient))
+      newClient = CECClientPtr();
+  }
 
   return newClient;
 }
@@ -620,4 +616,11 @@ void CLibCEC::PrintVersion(uint32_t version, char* buf, size_t bufSize)
 {
   std::string strVersion = CCECTypeUtils::VersionToString(version);
   snprintf(buf, bufSize, "%s", strVersion.c_str());
+}
+
+bool CLibCEC::AudioEnable(bool enable)
+{
+  return !!m_client ?
+      m_client->AudioEnable(enable) :
+      false;
 }

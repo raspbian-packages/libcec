@@ -1,9 +1,32 @@
-libcec (3.1.0+dfsg1-4+rpi1) stretch-staging; urgency=medium
+libcec (4.0.1+dfsg1-1+rpi1) stretch-staging; urgency=medium
 
+  [changes brought forward from 3.1.0+dfsg1-4+rpi1 by Peter Michael Green <plugwash@raspbian.org> at Thu, 10 Mar 2016 00:53:26 +0000]
   * Add symbols file hack for raspbian.
   * Fix clean target.
 
- -- Peter Michael Green <plugwash@raspbian.org>  Thu, 10 Mar 2016 00:53:26 +0000
+ -- Raspbian forward porter <root@raspbian.org>  Thu, 02 Feb 2017 15:11:26 +0000
+
+libcec (4.0.1+dfsg1-1) unstable; urgency=medium
+
+  * Update symbols file
+  * Imported Upstream version 4.0.1+dfsg1
+  * Add symbols re-exported from libp8-platform
+
+ -- Balint Reczey <balint@balintreczey.hu>  Wed, 18 Jan 2017 09:16:30 +0100
+
+libcec (4.0.0+dfsg1-1) experimental; urgency=medium
+
+  * Imported Upstream version 4.0.0+dfsg1
+  * Refresh patches
+  * Bump SO version in packaging scripts
+  * Remove files from debian/copyright which are removed from upstream
+    tarball
+  * Use secure URI in Vcs-Git
+  * Bump standards version
+  * Update symbols file for amd64 and i386
+  * Enable all hardening features
+
+ -- Balint Reczey <balint@balintreczey.hu>  Sat, 17 Dec 2016 20:15:34 +0100
 
 libcec (3.1.0+dfsg1-4) unstable; urgency=medium
 
