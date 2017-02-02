@@ -4,7 +4,7 @@ libcec (4.0.1+dfsg1-1+rpi1) stretch-staging; urgency=medium
   * Add symbols file hack for raspbian.
   * Fix clean target.
 
- -- Raspbian forward porter <root@raspbian.org>  Thu, 02 Feb 2017 15:11:26 +0000
+ -- Peter Michael Green <plugwash@raspbian.org>  Thu, 02 Feb 2017 15:11:26 +0000
 
 libcec (4.0.1+dfsg1-1) unstable; urgency=medium
 
