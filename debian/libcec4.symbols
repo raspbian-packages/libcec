@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 4.0.0 alpha arm64 armel armhf hppa hurd-i386 i386 mips mips64el mipsel powerpc ppc64 ppc64el s390x sparc64 x32
+# SymbolsHelper-Confirmed: 4.0.2+dfsg1-1~ alpha arm64 hppa m68k mips64el ppc64 ppc64el s390x sh4 sparc64 x32
 libcec.so.4 libcec4 #MINVER#
  CECDestroy@Base 2.1.4
  CECInitialise@Base 2.1.4
@@ -19,6 +19,7 @@ libcec.so.4 libcec4 #MINVER#
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIN3CEC11cec_commandEED0Ev@Base 3.1.0
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIN3CEC11cec_commandEED1Ev@Base 3.1.0
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIN3CEC11cec_commandEED2Ev@Base 3.1.0
+ _ZN10P8PLATFORM12SyncedBufferIPN3CEC13CCallbackWrapEE4PushES3_@Base 4.0.2+dfsg1-1~
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIPN3CEC13CCallbackWrapEED0Ev@Base 3.1.0
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIPN3CEC13CCallbackWrapEED1Ev@Base 3.1.0
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIPN3CEC13CCallbackWrapEED2Ev@Base 3.1.0
@@ -60,6 +61,10 @@ libcec.so.4 libcec4 #MINVER#
  _ZN10P8PLATFORM14CConditionImplD0Ev@Base 3.1.0
  _ZN10P8PLATFORM14CConditionImplD1Ev@Base 3.1.0
  _ZN10P8PLATFORM14CConditionImplD2Ev@Base 3.1.0
+ _ZN10P8PLATFORM14CDRMEdidParser18GetPhysicalAddressEv@Base 4.0.2
+ _ZN10P8PLATFORM14CDRMEdidParserD0Ev@Base 4.0.2
+ _ZN10P8PLATFORM14CDRMEdidParserD1Ev@Base 4.0.2
+ _ZN10P8PLATFORM14CDRMEdidParserD2Ev@Base 4.0.2
  (optional=templinst)_ZN10P8PLATFORM16CProtectedSocketINS_13CSerialSocketEE14GetErrorNumberEv@Base 3.1.0
  (arch-bits=64)_ZN10P8PLATFORM16CProtectedSocketINS_13CSerialSocketEE4OpenEm@Base 3.1.0
  (arch-bits=32)_ZN10P8PLATFORM16CProtectedSocketINS_13CSerialSocketEE4OpenEy@Base 3.1.0
@@ -868,6 +873,7 @@ libcec.so.4 libcec4 #MINVER#
  _ZN3CEC9CResponseC2ENS_10cec_opcodeE@Base 2.1.4
  _ZN3CEC9CResponseD1Ev@Base 2.1.4
  _ZN3CEC9CResponseD2Ev@Base 2.1.4
+ (arch-bits=64|arch=hppa x32)_ZNK10P8PLATFORM8CTimeout8TimeLeftEv@Base 4.0.2+dfsg1-1~
  _ZNK3CEC10CCECClient15GetDeviceByTypeENS_15cec_device_typeE@Base 2.1.4
  _ZNK3CEC13CCECBusDevice12GetProcessorEv@Base 2.1.4
  _ZNK3CEC13CCECBusDevice13GetLastActiveEv@Base 2.1.4
@@ -933,14 +939,7 @@ libcec.so.4 libcec4 #MINVER#
  _ZNK3CEC28CCECAdapterMessageQueueEntry8ToStringEv@Base 2.1.4
  _ZNK3CEC7CLibCEC18GetAdapterVendorIdEv@Base 2.1.4
  _ZNK3CEC7CLibCEC19GetAdapterProductIdEv@Base 2.1.4
- (arch-bits=32)_ZNSt11_Deque_baseIN3CEC11cec_commandESaIS1_EE17_M_initialize_mapEj@Base 3.1.0
- (arch-bits=64)_ZNSt11_Deque_baseIN3CEC11cec_commandESaIS1_EE17_M_initialize_mapEm@Base 3.1.0
- (optional=templinst)_ZNSt11_Deque_baseIN3CEC11cec_commandESaIS1_EED1Ev@Base 2.1.4
- (optional=templinst)_ZNSt11_Deque_baseIN3CEC11cec_commandESaIS1_EED2Ev@Base 2.1.4
- (arch-bits=32)_ZNSt11_Deque_baseIPN3CEC13CCallbackWrapESaIS2_EE17_M_initialize_mapEj@Base 3.1.0
- (arch-bits=64)_ZNSt11_Deque_baseIPN3CEC13CCallbackWrapESaIS2_EE17_M_initialize_mapEm@Base 3.1.0
- (arch-bits=32)_ZNSt11_Deque_baseIPN3CEC28CCECAdapterMessageQueueEntryESaIS2_EE17_M_initialize_mapEj@Base 3.1.0
- (arch-bits=64)_ZNSt11_Deque_baseIPN3CEC28CCECAdapterMessageQueueEntryESaIS2_EE17_M_initialize_mapEm@Base 3.1.0
+ _ZNKSt5ctypeIcE8do_widenEc@Base 4.0.2
  (optional=templinst|arch=armel)_ZNSt15_Sp_counted_ptrIDnLN9__gnu_cxx12_Lock_policyE1EE10_M_disposeEv@Base 3.1.0
  (optional=templinst|arch=!armel)_ZNSt15_Sp_counted_ptrIDnLN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv@Base 3.0.1
  (optional=templinst|arch=armel)_ZNSt15_Sp_counted_ptrIPN3CEC10CCECClientELN9__gnu_cxx12_Lock_policyE1EE10_M_destroyEv@Base 3.1.0
@@ -960,29 +959,28 @@ libcec.so.4 libcec4 #MINVER#
  (optional=templinst|arch=!armel)_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv@Base 3.0.1
  (optional=templinst|arch=!armel)_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv@Base 3.0.1
  (optional=templinst)_ZNSt5dequeIN3CEC11cec_commandESaIS1_EE16_M_push_back_auxIJRKS1_EEEvDpOT_@Base 3.0.1
- (optional=templinst)_ZNSt5dequeIPN3CEC13CCallbackWrapESaIS2_EE16_M_push_back_auxIJRKS2_EEEvDpOT_@Base 3.0.1
  (optional=templinst)_ZNSt5dequeIPN3CEC28CCECAdapterMessageQueueEntryESaIS2_EE16_M_push_back_auxIJRKS2_EEEvDpOT_@Base 3.0.1
- (optional=templinst)_ZNSt6vectorIN3CEC11cec_commandESaIS1_EE19_M_emplace_back_auxIJRKS1_EEEvDpOT_@Base 3.0.1
- (optional=templinst)_ZNSt6vectorIN3CEC20device_type_change_tESaIS1_EE19_M_emplace_back_auxIJRKS1_EEEvDpOT_@Base 3.0.1
+ _ZNSt6vectorIN3CEC11cec_commandESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 4.0.2+dfsg1-1~
+ _ZNSt6vectorIN3CEC20device_type_change_tESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 4.0.2+dfsg1-1~
  (optional=templinst)_ZNSt6vectorIN3CEC20device_type_change_tESaIS1_EED1Ev@Base 3.0.1
  (optional=templinst)_ZNSt6vectorIN3CEC20device_type_change_tESaIS1_EED2Ev@Base 3.0.1
- (optional=templinst)_ZNSt6vectorIPN3CEC13CCECBusDeviceESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_@Base 3.0.1
- (optional=templinst)_ZNSt6vectorIPN3CEC13CCECBusDeviceESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_@Base 3.0.1
+ _ZNSt6vectorIPN3CEC13CCECBusDeviceESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_@Base 4.0.2+dfsg1-1~
+ _ZNSt6vectorIPN3CEC13CCECBusDeviceESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_@Base 4.0.2+dfsg1-1~
  (optional=templinst)_ZNSt6vectorIPN3CEC13CCECBusDeviceESaIS2_EEaSERKS4_@Base 2.1.4
- (optional=templinst)_ZNSt6vectorISt10shared_ptrIN3CEC10CCECClientEESaIS3_EE19_M_emplace_back_auxIJRKS3_EEEvDpOT_@Base 3.0.1
+ _ZNSt6vectorISt10shared_ptrIN3CEC10CCECClientEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 4.0.2+dfsg1-1~
  (optional=templinst)_ZNSt6vectorISt10shared_ptrIN3CEC10CCECClientEESaIS3_EED1Ev@Base 3.0.1
  (optional=templinst)_ZNSt6vectorISt10shared_ptrIN3CEC10CCECClientEESaIS3_EED2Ev@Base 3.0.1
- (arch-bits=64)_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJRKmEEEvDpOT_@Base 3.1.0
- (arch-bits=32)_ZNSt6vectorIySaIyEE19_M_emplace_back_auxIJRKyEEEvDpOT_@Base 3.1.0
+ (arch-bits=64)_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_@Base 4.0.2+dfsg1-1~
+ (arch-bits=32)_ZNSt6vectorIySaIyEE17_M_realloc_insertIJRKyEEEvN9__gnu_cxx17__normal_iteratorIPyS1_EEDpOT_@Base 4.0.2+dfsg1-1~
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC10cec_opcodeES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE16_M_insert_uniqueIRKS1_EESt4pairISt17_Rb_tree_iteratorIS1_EbEOT_@Base 3.0.1
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC10cec_opcodeES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE8_M_eraseEPSt13_Rb_tree_nodeIS1_E@Base 2.1.4
- (optional=templinst|arch=alpha armel armhf hurd-i386 i386 mips mipsel powerpc ppc64 s390x)_ZNSt8_Rb_treeIN3CEC10cec_opcodeESt4pairIKS1_PNS0_9CResponseEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE24_M_get_insert_unique_posERS3_@Base 3.1.gcc6
- (optional=templinst|arch=amd64 arm64 hppa m68k mips64el ppc64el sparc64 x32)_ZNSt8_Rb_treeIN3CEC10cec_opcodeESt4pairIKS1_PNS0_9CResponseEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS6_ERS3_@Base 3.0.1
+ (optional=templinst|arch=amd64 arm64 hppa m68k mips64el ppc64el sh4 sparc64 x32)_ZNSt8_Rb_treeIN3CEC10cec_opcodeESt4pairIKS1_PNS0_9CResponseEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS6_ERS3_@Base 3.0.1
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC10cec_opcodeESt4pairIKS1_PNS0_9CResponseEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E@Base 2.1.4
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC10cec_opcodeESt4pairIKS1_St6vectorINS0_11cec_commandESaIS5_EEESt10_Select1stIS8_ESt4lessIS1_ESaIS8_EE16_M_insert_uniqueIS2_IS1_S7_EEES2_ISt17_Rb_tree_iteratorIS8_EbEOT_@Base 3.0.1
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC10cec_opcodeESt4pairIKS1_St6vectorINS0_11cec_commandESaIS5_EEESt10_Select1stIS8_ESt4lessIS1_ESaIS8_EE8_M_eraseEPSt13_Rb_tree_nodeIS8_E@Base 2.1.4
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_PNS0_13CCECBusDeviceEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE16_M_insert_uniqueIS2_IS1_S5_EEES2_ISt17_Rb_tree_iteratorIS6_EbEOT_@Base 3.0.1
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_PNS0_13CCECBusDeviceEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E@Base 2.1.4
+ (arch=!m68k)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_St10shared_ptrINS0_10CCECClientEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE16_M_insert_uniqueIS2_IS1_S6_EEES2_ISt17_Rb_tree_iteratorIS7_EbEOT_@Base 4.0.2+dfsg1-1~
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_St10shared_ptrINS0_10CCECClientEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE5eraseERS3_@Base 3.0.1
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_St10shared_ptrINS0_10CCECClientEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE8_M_eraseEPSt13_Rb_tree_nodeIS7_E@Base 3.0.1
  (arch-bits=64)_ZNSt8_Rb_treeImSt4pairIKmPN3CEC28CCECAdapterMessageQueueEntryEESt10_Select1stIS5_ESt4lessImESaIS5_EE16_M_insert_uniqueIS0_ImS4_EEES0_ISt17_Rb_tree_iteratorIS5_EbEOT_@Base 3.1.0
@@ -1001,6 +999,7 @@ libcec.so.4 libcec4 #MINVER#
  _ZTIN10P8PLATFORM13CSerialSocketE@Base 3.1.0
  _ZTIN10P8PLATFORM14CADLEdidParserE@Base 3.1.0
  _ZTIN10P8PLATFORM14CConditionImplE@Base 3.1.0
+ _ZTIN10P8PLATFORM14CDRMEdidParserE@Base 4.0.2
  _ZTIN10P8PLATFORM16CProtectedSocketINS_13CSerialSocketEEE@Base 3.1.0
  _ZTIN10P8PLATFORM16CRandrEdidParserE@Base 4.0.1
  _ZTIN10P8PLATFORM6CEventE@Base 3.1.0
@@ -1055,6 +1054,7 @@ libcec.so.4 libcec4 #MINVER#
  _ZTSN10P8PLATFORM13CSerialSocketE@Base 3.1.0
  _ZTSN10P8PLATFORM14CADLEdidParserE@Base 3.1.0
  _ZTSN10P8PLATFORM14CConditionImplE@Base 3.1.0
+ _ZTSN10P8PLATFORM14CDRMEdidParserE@Base 4.0.2
  _ZTSN10P8PLATFORM16CProtectedSocketINS_13CSerialSocketEEE@Base 3.1.0
  _ZTSN10P8PLATFORM16CRandrEdidParserE@Base 4.0.1
  _ZTSN10P8PLATFORM6CEventE@Base 3.1.0
@@ -1108,6 +1108,7 @@ libcec.so.4 libcec4 #MINVER#
  _ZTVN10P8PLATFORM13CSerialSocketE@Base 3.1.0
  _ZTVN10P8PLATFORM14CADLEdidParserE@Base 3.1.0
  _ZTVN10P8PLATFORM14CConditionImplE@Base 3.1.0
+ _ZTVN10P8PLATFORM14CDRMEdidParserE@Base 4.0.2
  _ZTVN10P8PLATFORM16CProtectedSocketINS_13CSerialSocketEEE@Base 3.1.0
  _ZTVN10P8PLATFORM16CRandrEdidParserE@Base 4.0.1
  _ZTVN10P8PLATFORM6CEventE@Base 3.1.0

@@ -1,3 +1,8 @@
 version=3
-opts=repacksuffix=+dfsg1,uversionmangle=s/_/./g,dversionmangle=s/.dfsg[0-9]*// \
-https://github.com/Pulse-Eight/libcec/tags .*/libcec-(\d[\d\.]+)\.tar\.gz
+opts=\
+compression=xz,\
+dversionmangle=s/.dfsg[0-9]*//,\
+repack,\
+repacksuffix=+dfsg1,\
+uversionmangle=s/_/./g,\
+ https://github.com/Pulse-Eight/libcec/tags .*/libcec-(\d[\d\.]+)\.tar\.gz

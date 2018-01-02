@@ -1,10 +1,10 @@
 Source: libcec
 Maintainer: Sjoerd Simons <sjoerd@debian.org>
-Uploaders: Balint Reczey <balint@balintreczey.hu>
+Uploaders: Balint Reczey <rbalint@ubuntu.com>
 Section: libs
 Priority: optional
 Build-Depends: debhelper (>= 9),
-               g++ (>= 4:5.2),
+               g++ (>= 4:7),
                pkg-config,
                libudev-dev [linux-any],
                libp8-platform-dev,
