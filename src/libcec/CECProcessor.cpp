@@ -45,8 +45,8 @@
 #include "LibCEC.h"
 #include "CECClient.h"
 #include "CECTypeUtils.h"
-#include <p8-platform/util/timeutils.h>
-#include <p8-platform/util/util.h>
+#include "p8-platform/util/timeutils.h"
+#include "p8-platform/util/util.h"
 #include <stdio.h>
 
 using namespace CEC;
@@ -681,6 +681,13 @@ bool CCECProcessor::PersistConfiguration(const libcec_configuration &configurati
   }
 
   return m_communication ? m_communication->PersistConfiguration(persistConfiguration) : false;
+}
+
+bool CCECProcessor::SetAutoMode(bool automode)
+{
+  return !!m_communication ?
+    m_communication->SetAutoMode(automode) :
+    false;
 }
 
 void CCECProcessor::RescanActiveDevices(void)

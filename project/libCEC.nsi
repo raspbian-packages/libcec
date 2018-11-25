@@ -20,17 +20,17 @@ Var EventGhostLocation
 
 !define MUI_FINISHPAGE_LINK "Visit http://libcec.pulse-eight.com/ for more information."
 !define MUI_FINISHPAGE_LINK_LOCATION "http://libcec.pulse-eight.com/"
-!define MUI_ABORTWARNING  
+!define MUI_ABORTWARNING
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "..\COPYING"
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 
-!define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM" 
-!define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\Pulse-Eight\USB-CEC Adapter sofware" 
+!define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
+!define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\Pulse-Eight\USB-CEC Adapter sofware"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
-!insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder  
+!insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -42,9 +42,9 @@ Var EventGhostLocation
 
 !insertmacro MUI_LANGUAGE "English"
 
+InstType "Full installation"
 InstType "USB-CEC Driver & libCEC"
 InstType "USB-CEC Driver Only"
-InstType "Full installation"
 
 Section "USB-CEC Driver" SecDriver
   SetShellVarContext current
@@ -81,8 +81,8 @@ Section "USB-CEC Driver" SecDriver
     "" "Uninstall Pulse-Eight USB-CEC Adapter software."
 
   WriteINIStr "$SMPROGRAMS\$StartMenuFolder\Visit Pulse-Eight.url" "InternetShortcut" "URL" "http://www.pulse-eight.com/"
-  !insertmacro MUI_STARTMENU_WRITE_END  
-    
+  !insertmacro MUI_STARTMENU_WRITE_END
+
   ;add entry to add/remove programs
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Pulse-Eight USB-CEC Adapter sofware" \
                  "DisplayName" "Pulse-Eight USB-CEC Adapter software"
@@ -110,7 +110,7 @@ SectionEnd
 
 Section "libCEC" SecLibCec
   SetShellVarContext current
-  SectionIn 1 3
+  SectionIn 1 2
 
   ; Copy to the installation directory
   SetOutPath "$INSTDIR"
@@ -137,7 +137,7 @@ SectionEnd
 
 Section "CEC Debug Client" SecCecClient
   SetShellVarContext current
-  SectionIn 3
+  SectionIn 1
 
   ; Copy to the installation directory
   SetOutPath "$INSTDIR"
@@ -160,13 +160,13 @@ Section "CEC Debug Client" SecCecClient
       "" "$INSTDIR\cec-client.exe" 0 SW_SHOWNORMAL \
       "" "Start the CEC Test client."
   ${EndIf}
-  !insertmacro MUI_STARTMENU_WRITE_END  
-    
+  !insertmacro MUI_STARTMENU_WRITE_END
+
 SectionEnd
 
 Section "libCEC Tray" SecDotNet
   SetShellVarContext current
-  SectionIn 1 3
+  SectionIn 1 2
 
   ; Copy to the installation directory
   SetOutPath "$INSTDIR"
@@ -189,75 +189,100 @@ Section "libCEC Tray" SecDotNet
       "" "$INSTDIR\cec-tray.exe" 0 SW_SHOWNORMAL \
       "" "Start libCEC Tray."
   ${EndIf}
-  !insertmacro MUI_STARTMENU_WRITE_END  
-    
+  !insertmacro MUI_STARTMENU_WRITE_END
+
 SectionEnd
 
 Section "Python bindings" SecPythonCec
   SetShellVarContext current
-  SectionIn 1 3
+  SectionIn 1 2
 
   ; Copy to the installation directory
   SetOutPath "$INSTDIR\python"
   File "..\build\x86\python\pyCecClient.py"
   SetOutPath "$INSTDIR\python\cec"
-  File "..\build\x86\python\cec\__init__.py"
   File "..\build\x86\python\cec\_cec.pyd"
+  File "..\build\x86\python\cec\__init__.py"
 SectionEnd
+
+; Function used to get the parent directory of the installer
+Function GetParentDirectory
+
+  Exch $R0
+  Push $R1
+  Push $R2
+  Push $R3
+
+  StrCpy $R1 0
+  StrLen $R2 $R0
+
+  loop:
+    IntOp $R1 $R1 + 1
+    IntCmp $R1 $R2 get 0 get
+    StrCpy $R3 $R0 1 -$R1
+    StrCmp $R3 "\" get
+  Goto loop
+
+  get:
+    StrCpy $R0 $R0 -$R1
+
+    Pop $R3
+    Pop $R2
+    Pop $R1
+    Exch $R0
+
+FunctionEnd
 
 !define EVENTGHOST_SECTIONNAME "EventGhost plugin"
 Section "" SecEvGhostCec
   SetShellVarContext current
-  SectionIn 1 3
+  SectionIn 1 2
 
   ${If} $EventGhostLocation != ""
-    SetOutPath "$EventGhostLocation\plugins\libCEC\cec"
-    File "..\build\x86\cec.dll"
-    File "..\build\x86\python\cec\__init__.py"
-    File "..\build\x86\python\cec\_cec.pyd"
-
-    SetOutPath "$EventGhostLocation\plugins\libCEC"
-    File "..\src\EventGhost\__init__.py"
-    File "..\src\EventGhost\cec.png"
-
-    SetOutPath $EventGhostLocation
-    File "..\src\EventGhost\libCEC_Demo_Configuration.xml"
+    ; We get the directory of the installer then pass it to GetParentDirectory
+    ; which we then append the path to the plugin file to the returned value
+    ; This is done because EventGhost needs to see the full path to the plugin
+    ; file.
+    Push $EXEDIR
+    Call GetParentDirectory
+    Pop $R0
+    ExecWait '"$EventGhostLocation\eventghost.exe" $R0\src\EventGhost\pulse_eight.egplugin'
   ${EndIf}
 SectionEnd
 
-!define REDISTRIBUTABLE_X86_SECTIONNAME "Microsoft Visual C++ 2013 Redistributable Package (x86)"
+!define REDISTRIBUTABLE_X86_SECTIONNAME "Microsoft Visual C++ 2015 Redistributable Package (x86)"
 Section "" SecVCRedistX86
   SetShellVarContext current
-  SectionIn 1 3
+  SectionIn 1 2 3
 
-  SetOutPath "$TEMP\vc2013_x86"
+  SetOutPath "$TEMP\vc2015_x86"
 
   ${If} $VSRedistInstalledX86 != "Yes"
-    NSISdl::download http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x86.exe vcredist_x86.exe
-    ExecWait '"$TEMP\vc2013_x86\vcredist_x86.exe" /q' $VSRedistSetupError
+    NSISdl::download https://download.microsoft.com/download/6/D/F/6DF3FF94-F7F9-4F0B-838C-A328D1A7D0EE/vc_redist.x86.exe vc_redist.x86.exe
+    ExecWait '"$TEMP\vc2015_x86\vc_redist.x86.exe" /q' $VSRedistSetupError
   ${Endif}
 
-  RMDIR /r "$TEMP\vc2013_x86"
+  RMDIR /r "$TEMP\vc2015_x86"
 SectionEnd
 
-!define REDISTRIBUTABLE_X64_SECTIONNAME "Microsoft Visual C++ 2013 Redistributable Package (x64)"
+!define REDISTRIBUTABLE_X64_SECTIONNAME "Microsoft Visual C++ 2015 Redistributable Package (x64)"
 Section "" SecVCRedistX64
   SetShellVarContext current
-  SectionIn 1 3
+  SectionIn 1 2 3
 
-  SetOutPath "$TEMP\vc2013_x64"
+  SetOutPath "$TEMP\vc2015_x64"
 
   ${If} $VSRedistInstalledX64 != "Yes"
-    NSISdl::download http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe vcredist_x64.exe
-    ExecWait '"$TEMP\vc2013_x64\vcredist_x64.exe" /q' $VSRedistSetupError
+    NSISdl::download https://download.microsoft.com/download/6/D/F/6DF3FF94-F7F9-4F0B-838C-A328D1A7D0EE/vc_redist.x64.exe vc_redist.x64.exe
+    ExecWait '"$TEMP\vc2015_x64\vc_redist.x64.exe" /q' $VSRedistSetupError
   ${Endif}
 
-  RMDIR /r "$TEMP\vc2013_x64"
+  RMDIR /r "$TEMP\vc2015_x64"
 SectionEnd
 
 Function .onInit
-  ; check for vc2013 x86 redist
-  ReadRegDword $1 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{f65db027-aff3-4070-886a-0d87064aabb1}" "BundleVersion"
+  ; check for vc2015 x86 redist
+  ReadRegDword $1 HKLM "SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{462f63a8-6347-4894-a1b3-dbfe3a4c981d}" "BundleVersion"
   ${If} $1 != ""
     StrCpy $VSRedistInstalledX86 "Yes"
   ${Endif}
@@ -271,8 +296,8 @@ Function .onInit
   ${Endif}
 
   ${If} ${RunningX64}
-    ; check for vc2013 x64 redist
-    ReadRegDword $1 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{050d4fc8-5d48-4b8f-8972-47c82c46020f}" "BundleVersion"
+    ; check for vc2015 x64 redist
+    ReadRegDword $1 HKLM "SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{323dad84-0974-4d90-a1c1-e006c7fdbb7d}" "BundleVersion"
     ${If} $1 != ""
       StrCpy $VSRedistInstalledX64 "Yes"
     ${Endif}
@@ -299,7 +324,7 @@ Function .onInit
     !insertMacro UnSelectSection ${SecEvGhostCec}
     SectionSetText ${SecEvGhostCec} ""
     MessageBox MB_OK \
-      "EventGhost was found found, so the plugin for EventGhost will not be installed. You can download EventGhost from http://www.eventghost.org/"
+      "EventGhost was not found, so the plugin for EventGhost will not be installed. You can download EventGhost from http://www.eventghost.org/"
   ${Endif}
 
 FunctionEnd
@@ -328,10 +353,11 @@ Section "Uninstall"
   ${EndIf}
 
   ; Uninstall EventGhost plugin
+  ; Eventghost has no uninstall plugin feature so we sinply delete the plugin
+  ; from the directory.
   ReadRegDword $1 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\EventGhost_is1" "InstallLocation"
   ${If} $1 != ""
-    RMDir /r "$1\plugins\libCEC"
-    Delete "$1\libCEC_Demo_Configuration.xml"
+    RMDir /r "$%PROGRAMDATA%\EventGhost\plugins\PulseEight"
   ${Endif}
 
   ; Uninstall the driver
@@ -344,7 +370,7 @@ Section "Uninstall"
   Delete "$INSTDIR\Uninstall.exe"
   RMDir /r "$INSTDIR"
   RMDir "$PROGRAMFILES\Pulse-Eight"
-  
+
   !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
   Delete "$SMPROGRAMS\$StartMenuFolder\libCEC Tray.lnk"
   ${If} ${RunningX64}

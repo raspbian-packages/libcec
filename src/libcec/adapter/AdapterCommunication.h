@@ -145,7 +145,8 @@ namespace CEC
     virtual bool StartBootloader(void) = 0;
 
     virtual bool SetLogicalAddresses(const cec_logical_addresses &addresses) = 0;
-    virtual cec_logical_addresses GetLogicalAddresses(void) = 0;
+
+    virtual cec_logical_addresses GetLogicalAddresses(void) const = 0;
 
     /*!
      * @brief Check whether the CEC adapter responds
@@ -175,10 +176,16 @@ namespace CEC
 
     /*!
      * @brief Persist the given configuration in adapter (if supported)
-     * @brief The configuration to store.
+     * @param configuration The configuration to store.
      * @return True when the configuration was persisted, false otherwise.
      */
     virtual bool PersistConfiguration(const libcec_configuration &configuration) = 0;
+
+    /*!
+     * @brief Enable or disable auto mode (only supported by P8 USB-CEC)
+     * @param automode true to enable, false to disable
+     */
+    virtual bool SetAutoMode(bool automode) = 0;
 
     /*!
      * @brief Get the persisted configuration from the adapter (if supported)

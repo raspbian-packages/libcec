@@ -34,10 +34,8 @@
 
 #include "env.h"
 #include <string>
-
-#include <p8-platform/threads/threads.h>
-#include <p8-platform/util/buffer.h>
-
+#include "p8-platform/threads/threads.h"
+#include "p8-platform/util/buffer.h"
 #include "adapter/AdapterCommunication.h"
 #include "devices/CECDeviceMap.h"
 #include "CECInputBuffer.h"
@@ -134,6 +132,7 @@ namespace CEC
       uint8_t GetRetryLineTimeout(void);
       bool CanPersistConfiguration(void);
       bool PersistConfiguration(const libcec_configuration &configuration);
+      bool SetAutoMode(bool automode);
       void RescanActiveDevices(void);
 
       bool SetLineTimeout(uint8_t iTimeout);

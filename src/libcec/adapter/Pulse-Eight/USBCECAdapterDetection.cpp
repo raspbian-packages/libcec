@@ -71,7 +71,7 @@ extern "C" {
 #include <string>
 #include <algorithm>
 #include <stdio.h>
-#include <p8-platform/util/StringUtils.h>
+#include "p8-platform/util/StringUtils.h"
 
 #define CEC_VID  0x2548
 #define CEC_PID  0x1001
@@ -270,7 +270,7 @@ uint8_t CUSBCECAdapterDetection::FindAdaptersApple(cec_adapter_descriptor *devic
   CFMutableDictionaryRef classesToMatch = IOServiceMatching(kIOSerialBSDServiceValue);
   if (classesToMatch)
   {
-    CFDictionarySetValue(classesToMatch, CFSTR(kIOSerialBSDTypeKey), CFSTR(kIOSerialBSDModemType));
+    CFDictionarySetValue(classesToMatch, CFSTR(kIOSerialBSDTypeKey), CFSTR(kIOSerialBSDAllTypes));
     kresult = IOServiceGetMatchingServices(kIOMasterPortDefault, classesToMatch, &serialPortIterator);
     if (kresult == KERN_SUCCESS)
     {

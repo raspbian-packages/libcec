@@ -39,8 +39,8 @@
 #include "USBCECAdapterMessage.h"
 #include "USBCECAdapterDetection.h"
 #include "platform/sockets/serialport.h"
-#include <p8-platform/util/timeutils.h>
-#include <p8-platform/util/util.h>
+#include "p8-platform/util/timeutils.h"
+#include "p8-platform/util/util.h"
 #include "platform/util/edid.h"
 #include "platform/adl/adl-edid.h"
 #include "platform/nvidia/nv-edid.h"
@@ -531,7 +531,7 @@ void CUSBCECAdapterCommunication::SetInitialised(bool bSetTo /* = true */)
   m_bInitialised = bSetTo;
 }
 
-bool CUSBCECAdapterCommunication::IsInitialised(void)
+bool CUSBCECAdapterCommunication::IsInitialised(void) const
 {
   CLockObject lock(m_mutex);
   return m_bInitialised;
@@ -566,7 +566,7 @@ bool CUSBCECAdapterCommunication::SetLogicalAddresses(const cec_logical_addresse
   return false;
 }
 
-cec_logical_addresses CUSBCECAdapterCommunication::GetLogicalAddresses(void)
+cec_logical_addresses CUSBCECAdapterCommunication::GetLogicalAddresses(void) const
 {
   cec_logical_addresses addresses;
   CLockObject lock(m_mutex);
@@ -645,6 +645,13 @@ bool CUSBCECAdapterCommunication::PersistConfiguration(const libcec_configuratio
 {
   return IsOpen() ?
       m_commands->PersistConfiguration(configuration) && m_eepromWriteThread->Write() :
+      false;
+}
+
+bool CUSBCECAdapterCommunication::SetAutoMode(bool automode)
+{
+  return IsOpen() ?
+      m_commands->SetSettingAutoEnabled(automode) && m_eepromWriteThread->Write() :
       false;
 }
 

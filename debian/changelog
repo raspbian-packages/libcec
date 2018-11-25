@@ -1,10 +1,31 @@
-libcec (4.0.2+dfsg1-2+rpi1) buster-staging; urgency=medium
+libcec (4.0.3+dfsg1-1+rpi1) buster-staging; urgency=medium
 
   [changes brought forward from 3.1.0+dfsg1-4+rpi1 by Peter Michael Green <plugwash@raspbian.org> at Thu, 10 Mar 2016 00:53:26 +0000]
   * Add symbols file hack for raspbian.
   * Fix clean target.
 
- -- Raspbian forward porter <root@raspbian.org>  Tue, 02 Jan 2018 06:01:40 +0000
+ -- Raspbian forward porter <root@raspbian.org>  Sun, 25 Nov 2018 18:53:14 +0000
+
+libcec (4.0.3+dfsg1-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * d/copyright: Use https protocol in Format field
+  * d/control: Fix wrong Vcs-*
+
+  [ Balint Reczey ]
+  * New upstream version 4.0.3+dfsg1
+  * Update symbols after enabling Exynos and AOCEC API support
+  * Update installing Python 2 package content
+  * Update symbols. There are symbol removals, but upstream does not list
+    them as being part of the public API.
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Fri, 16 Nov 2018 03:36:22 +0100
+
+libcec (4.0.2+dfsg1-3) experimental; urgency=medium
+
+  * Enable Exynos and AOCEC API support (Closes: #885177)
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Tue, 26 Dec 2017 02:55:36 +0100
 
 libcec (4.0.2+dfsg1-2) unstable; urgency=medium
 
