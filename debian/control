@@ -15,6 +15,7 @@ Build-Depends: debhelper (>= 9),
                libxrandr-dev,
                x11proto-core-dev,
                libncurses5-dev
+Build-Conflicts: libpython3.0-dev, libpython3.1-dev, libpython3.2-dev, libpython3.3-dev, libpython3.4-dev, libpython3.5-dev, libpython3.6-dev, libpython3.7-dev, libpython3.8-dev, libpython3.9-dev
 Standards-Version: 3.9.8
 Vcs-Browser: https://salsa.debian.org/debian/libcec
 Vcs-Git: https://salsa.debian.org/debian/libcec.git

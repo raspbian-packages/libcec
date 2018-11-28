@@ -4,6 +4,11 @@ libcec (4.0.3+dfsg1-1+rpi1) buster-staging; urgency=medium
   * Add symbols file hack for raspbian.
   * Fix clean target.
 
+  [changes introduced in 4.0.3+dfsg1-1+rpi1 by Peter Michael Green]
+  * Add build-conflicts on libpython3 dev packages, if they are installed
+    this package will pick them in preference to 2.7 resulting in
+    missing files.
+
  -- Peter Michael Green <plugwash@raspbian.org>  Wed, 28 Nov 2018 08:51:38 +0000
 
 libcec (4.0.3+dfsg1-1) unstable; urgency=medium
