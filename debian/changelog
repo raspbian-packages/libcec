@@ -4,7 +4,7 @@ libcec (4.0.3+dfsg1-1+rpi1) buster-staging; urgency=medium
   * Add symbols file hack for raspbian.
   * Fix clean target.
 
- -- Raspbian forward porter <root@raspbian.org>  Sun, 25 Nov 2018 18:53:14 +0000
+ -- Peter Michael Green <plugwash@raspbian.org>  Wed, 28 Nov 2018 08:51:38 +0000
 
 libcec (4.0.3+dfsg1-1) unstable; urgency=medium
 
