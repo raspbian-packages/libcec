@@ -1,4 +1,4 @@
-libcec (4.0.3+dfsg1-1+rpi1) buster-staging; urgency=medium
+libcec (4.0.4+dfsg1-1+rpi1) buster-staging; urgency=medium
 
   [changes brought forward from 3.1.0+dfsg1-4+rpi1 by Peter Michael Green <plugwash@raspbian.org> at Thu, 10 Mar 2016 00:53:26 +0000]
   * Add symbols file hack for raspbian.
@@ -9,7 +9,14 @@ libcec (4.0.3+dfsg1-1+rpi1) buster-staging; urgency=medium
     this package will pick them in preference to 2.7 resulting in
     missing files.
 
- -- Peter Michael Green <plugwash@raspbian.org>  Wed, 28 Nov 2018 08:51:38 +0000
+ -- Raspbian forward porter <root@raspbian.org>  Fri, 22 Feb 2019 02:12:53 +0000
+
+libcec (4.0.4+dfsg1-1) unstable; urgency=medium
+
+  * New upstream version 4.0.4+dfsg1
+  * Add Salsa CI configuration
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Mon, 11 Feb 2019 15:57:39 +0700
 
 libcec (4.0.3+dfsg1-1) unstable; urgency=medium
 
