@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 4.0.3+dfsg1-1~ amd64 i386
+# SymbolsHelper-Confirmed: 4.0.4+dfsg1-2~ amd64
 libcec.so.4 libcec4 #MINVER#
  CECDestroy@Base 2.1.4
  CECInitialise@Base 2.1.4
@@ -19,7 +19,6 @@ libcec.so.4 libcec4 #MINVER#
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIN3CEC11cec_commandEED0Ev@Base 3.1.0
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIN3CEC11cec_commandEED1Ev@Base 3.1.0
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIN3CEC11cec_commandEED2Ev@Base 3.1.0
- _ZN10P8PLATFORM12SyncedBufferIPN3CEC13CCallbackWrapEE4PushES3_@Base 4.0.2+dfsg1-1~
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIPN3CEC13CCallbackWrapEED0Ev@Base 3.1.0
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIPN3CEC13CCallbackWrapEED1Ev@Base 3.1.0
  (optional=templinst)_ZN10P8PLATFORM12SyncedBufferIPN3CEC13CCallbackWrapEED2Ev@Base 3.1.0
@@ -392,8 +391,6 @@ libcec.so.4 libcec4 #MINVER#
  _ZN3CEC13CCECTypeUtils8ToStringENS_10cec_opcodeE@Base 2.1.4
  _ZN3CEC13CCECTypeUtils8ToStringENS_19cec_logical_addressE@Base 2.1.4
  _ZN3CEC13CCECTypeUtils8ToStringENS_21cec_user_control_codeE@Base 3.0.1
- _ZN3CEC13CCallbackWrapD1Ev@Base 4.0.3+dfsg1-1~
- _ZN3CEC13CCallbackWrapD2Ev@Base 4.0.3+dfsg1-1~
  _ZN3CEC15CAdapterFactory11GetInstanceEPKct@Base 2.1.4
  _ZN3CEC15CAdapterFactory12FindAdaptersEPNS_11cec_adapterEhPKc@Base 2.1.4
  _ZN3CEC15CAdapterFactory14DetectAdaptersEPNS_22cec_adapter_descriptorEhPKc@Base 2.1.4
@@ -1012,7 +1009,7 @@ libcec.so.4 libcec4 #MINVER#
  _ZNK3CEC7CLibCEC18GetAdapterVendorIdEv@Base 2.1.4
  _ZNK3CEC7CLibCEC19GetAdapterProductIdEv@Base 2.1.4
  _ZNKSt5ctypeIcE8do_widenEc@Base 4.0.2
- (optional=templinst|subst)_ZNSt11_Deque_baseIN3CEC11cec_commandESaIS1_EE17_M_initialize_mapE{size_t}@Base 4.0.3+dfsg1-1~
+ (optional=templinst)_ZNSt11_Deque_baseIN3CEC11cec_commandESaIS1_EE17_M_initialize_mapEm@Base 4.0.4+dfsg1-2~
  (optional=templinst|arch=armel riscv64)_ZNSt15_Sp_counted_ptrIDnLN9__gnu_cxx12_Lock_policyE1EE10_M_disposeEv@Base 3.1.0
  (optional=templinst|arch=!armel !riscv64)_ZNSt15_Sp_counted_ptrIDnLN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv@Base 3.0.1
  (optional=templinst|arch=armel riscv64)_ZNSt15_Sp_counted_ptrIPN3CEC10CCECClientELN9__gnu_cxx12_Lock_policyE1EE10_M_destroyEv@Base 3.1.0
@@ -1054,14 +1051,13 @@ libcec.so.4 libcec4 #MINVER#
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC10cec_opcodeESt4pairIKS1_St6vectorINS0_11cec_commandESaIS5_EEESt10_Select1stIS8_ESt4lessIS1_ESaIS8_EE8_M_eraseEPSt13_Rb_tree_nodeIS8_E@Base 2.1.4
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_PNS0_13CCECBusDeviceEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE17_M_emplace_uniqueIJS2_IS1_S5_EEEES2_ISt17_Rb_tree_iteratorIS6_EbEDpOT_@Base 4.0.3+dfsg1-1~
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_PNS0_13CCECBusDeviceEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E@Base 2.1.4
- (optional=templinst)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_St10shared_ptrINS0_10CCECClientEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE17_M_emplace_uniqueIJS2_IS1_S6_EEEES2_ISt17_Rb_tree_iteratorIS7_EbEDpOT_@Base 4.0.3+dfsg1-1~
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_St10shared_ptrINS0_10CCECClientEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE5eraseERS3_@Base 3.0.1
  (optional=templinst)_ZNSt8_Rb_treeIN3CEC19cec_logical_addressESt4pairIKS1_St10shared_ptrINS0_10CCECClientEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE8_M_eraseEPSt13_Rb_tree_nodeIS7_E@Base 3.0.1
+ (optional=templinst)_ZNSt8_Rb_treeImSt4pairIKmPN3CEC28CCECAdapterMessageQueueEntryEESt10_Select1stIS5_ESt4lessImESaIS5_EE17_M_emplace_uniqueIJS0_ImS4_EEEES0_ISt17_Rb_tree_iteratorIS5_EbEDpOT_@Base 4.0.4+dfsg1-2~
  (arch-bits=64)_ZNSt8_Rb_treeImSt4pairIKmPN3CEC28CCECAdapterMessageQueueEntryEESt10_Select1stIS5_ESt4lessImESaIS5_EE5eraseERS1_@Base 3.1.0
  (arch-bits=64)_ZNSt8_Rb_treeImSt4pairIKmPN3CEC28CCECAdapterMessageQueueEntryEESt10_Select1stIS5_ESt4lessImESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E@Base 3.1.0
  (arch-bits=32)_ZNSt8_Rb_treeIySt4pairIKyPN3CEC28CCECAdapterMessageQueueEntryEESt10_Select1stIS5_ESt4lessIyESaIS5_EE5eraseERS1_@Base 3.1.0
  (arch-bits=32)_ZNSt8_Rb_treeIySt4pairIKyPN3CEC28CCECAdapterMessageQueueEntryEESt10_Select1stIS5_ESt4lessIyESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E@Base 3.1.0
- (optional=templinst|subst)_ZNSt8_Rb_treeI{uint64_t}St4pairIK{uint64_t}PN3CEC28CCECAdapterMessageQueueEntryEESt10_Select1stIS5_ESt4lessI{uint64_t}ESaIS5_EE17_M_emplace_uniqueIJS0_I{uint64_t}S4_EEEES0_ISt17_Rb_tree_iteratorIS5_EbEDpOT_@Base 4.0.3+dfsg1-1~
  _ZTIN10P8PLATFORM11CSerialPortE@Base 3.1.0
  _ZTIN10P8PLATFORM11PreventCopyE@Base 3.1.0
  _ZTIN10P8PLATFORM12SyncedBufferIN3CEC11cec_commandEEE@Base 3.1.0

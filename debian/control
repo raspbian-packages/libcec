@@ -6,6 +6,7 @@ Priority: optional
 Build-Depends: debhelper (>= 9),
                g++ (>= 4:7),
                pkg-config,
+               pkg-kde-tools,
                libudev-dev [linux-any],
                libp8-platform-dev,
                python-dev,
