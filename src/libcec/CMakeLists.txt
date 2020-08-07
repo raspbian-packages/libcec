@@ -133,7 +133,7 @@ set(CEC_HEADERS devices/CECRecordingDevice.h
 source_group("Header Files" FILES ${CEC_HEADERS})
 
 # platform and device specific
-include(cmake/SetBuildInfo.cmake)
+set(LIB_INFO "compiled on ${CMAKE_SYSTEM} ... ")
 include(cmake/CheckPlatformSupport.cmake)
 
 ## create project groups
