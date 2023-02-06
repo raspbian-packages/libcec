@@ -1,2 +1,2 @@
-# There is currently no upstream source tarball. This package is generated
-# from upstream's git vcs.
+version=4
+opts=compression=xz,dversionmangle=s/.dfsg[0-9]*//,repack,repacksuffix=+dfsg1,uversionmangle=s/_/./g, https://github.com/Pulse-Eight/libcec/tags .*/libcec-(\d[\d\.]+)\.tar\.gz
