@@ -1,0 +1,55 @@
+Source: libcec
+Maintainer: Barak A. Pearlmutter <bap@debian.org>
+Section: libs
+Priority: optional
+Build-Depends: debhelper-compat (= 13),
+               pkgconf,
+               pkg-kde-tools,
+               libudev-dev [linux-any],
+               libp8-platform-dev,
+               cmake,
+               swig,
+               libxrandr-dev,
+               x11proto-core-dev,
+               libncurses-dev
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Vcs-Browser: https://salsa.debian.org/debian/libcec
+Vcs-Git: https://salsa.debian.org/debian/libcec.git
+Homepage: http://libcec.pulse-eight.com/
+
+Package: libcec-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: libcec7 (= ${binary:Version}),
+         ${misc:Depends}
+Description: USB CEC Adaptor communication Library (development files)
+ This library provides support for the Pulse-Eight USB-CEC adapter and
+ other CEC capable hardware, like the Raspberry Pi.
+ .
+ This package provides the necessary files needed for development.
+
+Package: libcec7
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: USB CEC Adaptor communication Library (shared library)
+ This library provides support for the Pulse-Eight USB-CEC adapter and
+ other CEC capable hardware, like the Raspberry Pi.
+ .
+ This package provides the shared library.
+
+Package: cec-utils
+Architecture: any
+Section: utils
+Depends: libcec7 (= ${binary:Version}),
+         ${shlibs:Depends},
+         ${misc:Depends}
+Description: USB CEC Adaptor communication Library (utility programs)
+ This library provides support for the Pulse-Eight USB-CEC adapter and
+ other CEC capable hardware, like the Raspberry Pi.
+ .
+ This package provides the CEC utility programs.
