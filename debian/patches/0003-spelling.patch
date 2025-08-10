@@ -1,0 +1,21 @@
+From: "Barak A. Pearlmutter" <barak+git@pearlmutter.net>
+Date: Wed, 5 Mar 2025 19:56:23 +0000
+Subject: spelling
+
+---
+ src/libcec/CECClient.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/libcec/CECClient.cpp b/src/libcec/CECClient.cpp
+index b38fab3..85982a4 100644
+--- a/src/libcec/CECClient.cpp
++++ b/src/libcec/CECClient.cpp
+@@ -1709,7 +1709,7 @@ void* CCECClient::Process(void)
+         case CCallbackWrap::CEC_CB_COMMAND_HANDLER:
+           keepResult = cb->Report(CallbackCommandHandler(cb->m_command));
+           if (!keepResult)
+-            LIB_CEC->AddLog(CEC_LOG_WARNING, "Command callback timeout occured !");
++            LIB_CEC->AddLog(CEC_LOG_WARNING, "Command callback timeout occurred !");
+ 	  break;
+         default:
+           break;
