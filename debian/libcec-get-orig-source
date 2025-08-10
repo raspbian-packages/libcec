@@ -3,13 +3,13 @@
 # Script used to generate the orig source tarball for libcec.
 
 LIBCEC_GIT_URL="git://github.com/Pulse-Eight/libcec.git"
-LIBCEC_GIT_BRANCH="release"
+LIBCEC_GIT_TAG="libcec-2.2.0"
 LIBCEC_VERSION="2.2.0"
 
 rm -rf "libcec-${LIBCEC_VERSION}"
 git clone "$LIBCEC_GIT_URL" "libcec-${LIBCEC_VERSION}"
 cd "libcec-${LIBCEC_VERSION}"
-git checkout -b "$LIBCEC_GIT_BRANCH" origin/"$LIBCEC_GIT_BRANCH"
+git checkout "$LIBCEC_GIT_TAG"
 autoreconf -vif
 cd ..
 
@@ -33,5 +33,5 @@ rm -rf libcec-${LIBCEC_VERSION}/debian
 echo "Removing empty directories"
 find libcec-${LIBCEC_VERSION} -type d -empty -delete
 
-tar --exclude-vcs -czf "libcec_${LIBCEC_VERSION}.orig.tar.gz" \
+tar --exclude-vcs -cJf "libcec_${LIBCEC_VERSION}+dfsg1.orig.tar.xz" \
   "libcec-${LIBCEC_VERSION}/"
